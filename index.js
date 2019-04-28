@@ -22,7 +22,7 @@ const options = {
 peerserver = ExpressPeerServer(srv, options);
 
 //set up the app to use the peerserver on the /api route
-app.use('/peerjs', peerserver);
+app.use('/', peerserver);
 
 //routing
 app.get('/', function (req, res) {
