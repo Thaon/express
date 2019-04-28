@@ -1,1 +1,14 @@
-{"version":2,"name":"lab9","builds":[{"src":"**/*.js","use":"@now/node"}]}
+{"version":2,"name":"lab9","builds":[
+	{"src":"**/*.js","use":"@now/node"}
+],
+"routes": [
+    {
+      "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Accept"
+      },
+      "src": "/.*",
+      "dest": "/src/index.ts"
+    }
+  ]}
