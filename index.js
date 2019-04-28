@@ -26,7 +26,7 @@ peerserver = ExpressPeerServer(srv, options);
 app.use('/api', peerserver);
 
 //zeit lambda
-server.listen(3000, () => {
+server.listen(PORT, () => {
   console.log('server running')
 })
 
