@@ -4,8 +4,6 @@ const ExpressPeerServer = require('peer').ExpressPeerServer;
 
 const app = express()
 
-const server = require('http').createServer(app)
-
 // add some security-related headers to the response
 app.use(helmet())
 
@@ -13,7 +11,7 @@ app.use(helmet())
 PORT = process.env.PORT || 5000
 
 //opens up a communication channel on the specified port
-srv = server.listen(PORT)
+srv = app.listen(PORT)
 
 const options = {
 	debug: true
@@ -23,12 +21,7 @@ const options = {
 peerserver = ExpressPeerServer(srv, options);
 
 //set up the app to use the peerserver on the /api route
-app.use('/api', peerserver);
-
-//zeit lambda
-server.listen(PORT, () => {
-  console.log('server running')
-})
+app.use('/', peerserver);
 
 //routing
 app.get('/', function (req, res) {
