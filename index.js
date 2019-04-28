@@ -14,6 +14,7 @@ PORT = process.env.PORT || 5000
 srv = app.listen(PORT)
 
 const options = {
+	allow_discovery: true,
 	debug: true
 }
 
