@@ -15,7 +15,7 @@ srv = app.listen(PORT)
 
 const options = {
 	allow_discovery: true,
-	debug: true
+	debug: true, proxied: true
 }
 
 //create an instance of the ExpressPeerServer
