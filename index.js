@@ -1,11 +1,13 @@
 const express = require('express')
 const helmet = require('helmet')
+var cors = require('cors')
 const ExpressPeerServer = require('peer').ExpressPeerServer;
 
 const app = express()
 
 // add some security-related headers to the response
 app.use(helmet())
+app.use(cors())
 
 //set up our port to either be 5000 or the default environment port if 5000 is not available
 PORT = process.env.PORT || 5000
