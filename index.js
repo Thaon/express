@@ -9,6 +9,8 @@ const app = express()
 app.use(helmet())
 app.use(cors())
 
+app.options('*', cors())
+
 //set up our port to either be 5000 or the default environment port if 5000 is not available
 PORT = process.env.PORT || 5000
 
