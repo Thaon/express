@@ -1,15 +1,19 @@
-{"version":2,"name":"lab9","builds":[
-	{"src":"**/*.js","use":"@now/node"}
-],
-"headers": [
-      {
-        "source": "**",
-        "headers": [
-          {
-            "key": "Access-Control-Allow-Origin",
-            "value": "*"
-          }
-        ]
-      }
-    ]
+{
+	"version":1,
+	"name":"lab9",
+	"builds":
+	[{
+		"src":"**/*.js",
+		"use":"@now/node-server"
+	}],
+	"routes":
+	[{
+	    "headers": {
+	        "Access-Control-Allow-Origin": "*",
+	        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+	        "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Accept"
+	    },
+	    "src": "/.*",
+	    "dest": "/index.js"
+	}]
 }
