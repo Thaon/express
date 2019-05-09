@@ -15,18 +15,20 @@ app.use(BodyParser.urlencoded({ extended: true }));
 
 var database, collection;
 
-MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
-    if(error) {
-        cnsole.log("Ouch " + error);
-        throw error;
-    }
-    database = client.db(DATABASE_NAME);
-    collection = database.collection("Notes");
-    console.log("YAY");
-    console.log(database);
-    console.log(collection);
-});
-
+function Connect()
+{
+    MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
+        if(error) {
+            cnsole.log("Ouch " + error);
+            throw error;
+        }
+        database = client.db(DATABASE_NAME);
+        collection = database.collection("Notes");
+        console.log("YAY");
+        console.log(database);
+        console.log(collection);
+    });
+}
 
 //we are connected! let's add some routes:
 
@@ -48,6 +50,7 @@ app.post("/note", (request, response) => {
 
 //get all notes
 app.get("/notes", (request, response) => {
+    Connect();
     collection.find({}).toArray((error, result) => {
         if(error) {
             return response.status(500).send(error);
