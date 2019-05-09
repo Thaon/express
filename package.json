@@ -1,15 +1,18 @@
 {
-  "name": "nodejs-express",
+  "name": "mongo-hapi",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
-  "license": "MIT",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.16.4",
-    "helmet": "^3.16.0",
-    "peer": "^0.2.10"
-  },
   "scripts": {
-    "start": "node . --cors"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.16.4",
+    "mongodb": "^3.2.4"
   }
 }

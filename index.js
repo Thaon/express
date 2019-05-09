@@ -1,38 +1,64 @@
-const express = require('express')
-const helmet = require('helmet')
-var cors = require('cors')
-const ExpressPeerServer = require('peer').ExpressPeerServer;
+const Express = require("express");
+const BodyParser = require("body-parser");
+const MongoClient = require("mongodb").MongoClient;
+const ObjectId = require("mongodb").ObjectID;
 
-const app = express()
+const CONNECTION_URL = "mongodb+srv://root:root@lab10-ojovu.mongodb.net/test?retryWrites=true";
+const DATABASE_NAME = "Lab10";
 
-// add some security-related headers to the response
-app.use(helmet())
-app.use(cors())
+const PORT = process.env.PORT || 3000;
 
-app.options('*', cors())
+var app = Express();
 
-//set up our port to either be 5000 or the default environment port if 5000 is not available
-PORT = process.env.PORT || 5000
+app.use(BodyParser.json());
+app.use(BodyParser.urlencoded({ extended: true }));
 
-//opens up a communication channel on the specified port
-srv = app.listen(PORT)
+var database, collection;
 
-const options = {
-	allow_discovery: true,
-	debug: true, proxied: true
-}
-
-//create an instance of the ExpressPeerServer
-peerserver = ExpressPeerServer(srv, options);
-
-//set up the app to use the peerserver on the /api route
-app.use('/', peerserver);
-
-app.get('/', function(req, res, next) {
-  // Handle the get for this route
+app.listen(PORT, () => {
+    MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
+        if(error) {
+            throw error;
+        }
+        database = client.db(DATABASE_NAME);
+        collection = database.collection("people");
+        console.log("Connected to `" + DATABASE_NAME + "`!");
+        console.log("on port: " + PORT);
+    });
 });
 
-app.post('/', function(req, res, next) {
- // Handle the post for this route
-})
-module.exports = app
+//we are connected! let's add some routes:
+
+//save a new note
+app.post("/note", (request, response) => {
+    collection.insert(request.body, (error, result) => {
+        if(error) {
+            return response.status(500).send(error);
+        }
+        response.send(result.result);
+    });
+});
+//we will use the following template for notes: '{"name":"","body":""}'
+
+//get all notes
+app.get("/notes", (request, response) => {
+    collection.find({}).toArray((error, result) => {
+        if(error) {
+            return response.status(500).send(error);
+        }
+        response.send(result);
+    });
+});
+
+//get a single note
+app.get("/notes/:id", (request, response) => {
+    collection.findOne({ "_id": new ObjectId(request.params.id) }, (error, result) => {
+        if(error) {
+            return response.status(500).send(error);
+        }
+        response.send(result);
+    });
+});
+
+//this last line is required by zeit since we are stateless
+module.exports = app;
