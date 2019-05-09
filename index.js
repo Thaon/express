@@ -15,19 +15,21 @@ app.use(BodyParser.urlencoded({ extended: true }));
 
 var database, collection;
 
-app.listen(PORT, () => {
-    MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
-        if(error) {
-            throw error;
-        }
-        database = client.db(DATABASE_NAME);
-        collection = database.collection("Notes");
-        console.log("Connected to `" + DATABASE_NAME + "`!");
-        console.log("on port: " + PORT);
-    });
+MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
+    if(error) {
+        throw error;
+    }
+    database = client.db(DATABASE_NAME);
+    collection = database.collection("Notes");
 });
 
+
 //we are connected! let's add some routes:
+
+//api test
+app.get("/hi", (request, response) => {
+        response.send("Hello world!");
+});
 
 //save a new note
 app.post("/note", (request, response) => {
@@ -39,10 +41,6 @@ app.post("/note", (request, response) => {
     });
 });
 //we will use the following template for notes: '{"name":"","body":""}'
-
-app.get("/hi", (request, response) => {
-        response.send("Hello world!");
-});
 
 //get all notes
 app.get("/notes", (request, response) => {
