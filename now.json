@@ -8,7 +8,7 @@
 	},
 	{
 		"src": "package.json",
-		"use": "@now/next"
+		"use": "@now/node"
 	}],
 	"routes":
 	[{
