@@ -15,19 +15,6 @@ app.use(BodyParser.urlencoded({ extended: true }));
 
 var database, collection;
 
-module.exports = Connect = () =>
-{
-    MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
-        if(error) {
-            throw error;
-        }
-        database = client.db(DATABASE_NAME);
-        collection = database.collection("Notes");
-        
-        return Promise.resolve();
-    });
-}
-
 //we are connected! let's add some routes:
 
 //api test
@@ -36,12 +23,22 @@ app.get("/hi", (request, response) => {
 });
 
 //save a new note
-app.post("/note", (request, response) => {
-    collection.insert(request.body, (error, result) => {
+app.post("/notes", (request, response) => {
+    
+    MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
         if(error) {
-            return response.status(500).send(error);
+            cnsole.log("Ouch " + error);
+            throw error;
         }
-        response.send(result.result);
+        database = client.db(DATABASE_NAME);
+        collection = database.collection("Notes");
+
+        collection.insert(request.body, (error, result) => {
+            if(error) {
+                return response.status(500).send(error);
+            }
+            response.send(result.result);
+        });
     });
 });
 //we will use the following template for notes: '{"name":"","body":""}'
@@ -49,7 +46,14 @@ app.post("/note", (request, response) => {
 //get all notes
 app.get("/notes", (request, response) => {
 
-    Connect().then(() => {
+    MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
+        if(error) {
+            cnsole.log("Ouch " + error);
+            throw error;
+        }
+        database = client.db(DATABASE_NAME);
+        collection = database.collection("Notes");
+
 
         collection.find({}).toArray((error, result) => {
             if(error) {
@@ -62,11 +66,21 @@ app.get("/notes", (request, response) => {
 
 //get a single note
 app.get("/notes/:id", (request, response) => {
-    collection.findOne({ "_id": new ObjectId(request.params.id) }, (error, result) => {
+    
+    MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
         if(error) {
-            return response.status(500).send(error);
+            cnsole.log("Ouch " + error);
+            throw error;
         }
-        response.send(result);
+        database = client.db(DATABASE_NAME);
+        collection = database.collection("Notes");
+
+        collection.findOne({ "_id": new ObjectId(request.params.id) }, (error, result) => {
+            if(error) {
+                return response.status(500).send(error);
+            }
+            response.send(result);
+        });
     });
 });
 
