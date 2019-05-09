@@ -50,12 +50,14 @@ app.post("/note", (request, response) => {
 
 //get all notes
 app.get("/notes", (request, response) => {
-    Connect();
-    collection.find({}).toArray((error, result) => {
-        if(error) {
-            return response.status(500).send(error);
-        }
-        response.send(result);
+    Connect().then(() =>
+        {
+        collection.find({}).toArray((error, result) => {
+            if(error) {
+                return response.status(500).send(error);
+            }
+            response.send(result);
+        });
     });
 });
 
