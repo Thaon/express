@@ -21,7 +21,7 @@ app.listen(PORT, () => {
             throw error;
         }
         database = client.db(DATABASE_NAME);
-        collection = database.collection("people");
+        collection = database.collection("Notes");
         console.log("Connected to `" + DATABASE_NAME + "`!");
         console.log("on port: " + PORT);
     });
