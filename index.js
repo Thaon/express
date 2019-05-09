@@ -19,14 +19,12 @@ function Connect()
 {
     MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
         if(error) {
-            cnsole.log("Ouch " + error);
             throw error;
         }
         database = client.db(DATABASE_NAME);
         collection = database.collection("Notes");
-        console.log("YAY");
-        console.log(database);
-        console.log(collection);
+        
+        return Promise.resolve();
     });
 }
 
@@ -51,14 +49,7 @@ app.post("/note", (request, response) => {
 //get all notes
 app.get("/notes", (request, response) => {
 
-    MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
-        if(error) {
-            cnsole.log("Ouch " + error);
-            throw error;
-        }
-        database = client.db(DATABASE_NAME);
-        collection = database.collection("Notes");
-
+    Connect().then(() => {
 
         collection.find({}).toArray((error, result) => {
             if(error) {
