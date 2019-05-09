@@ -27,7 +27,7 @@ app.post("/notes", (request, response) => {
     
     MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
         if(error) {
-            cnsole.log("Ouch " + error);
+            response.send(error);
             throw error;
         }
         database = client.db(DATABASE_NAME);
@@ -48,7 +48,7 @@ app.get("/notes", (request, response) => {
 
     MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
         if(error) {
-            cnsole.log("Ouch " + error);
+            response.send(error);
             throw error;
         }
         database = client.db(DATABASE_NAME);
@@ -69,7 +69,7 @@ app.get("/notes/:id", (request, response) => {
     
     MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
         if(error) {
-            cnsole.log("Ouch " + error);
+            response.send(error);
             throw error;
         }
         database = client.db(DATABASE_NAME);
