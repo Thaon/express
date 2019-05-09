@@ -12,7 +12,7 @@
 	}],
 	"routes":
 	[{
-	    "src": "/(.*)",
-	    "dest": "/$1"
+	    "src": "/notes",
+	    "dest": "/index.js"
 	}]
 }
