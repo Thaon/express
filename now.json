@@ -3,7 +3,7 @@
 	"name":"lab9",
 	"builds":
 	[{
-		"src":"**/*.js",
+		"src":"index.js",
 		"use":"@now/node"
 	},
 	{
@@ -12,7 +12,7 @@
 	}],
 	"routes":
 	[{
-	    "src": "/notes",
+	    "src": "/.*",
 	    "dest": "/index.js"
 	}]
 }

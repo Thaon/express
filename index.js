@@ -40,6 +40,10 @@ app.post("/note", (request, response) => {
 });
 //we will use the following template for notes: '{"name":"","body":""}'
 
+app.get("/hi", (request, response) => {
+        response.send("Hello world!");
+});
+
 //get all notes
 app.get("/notes", (request, response) => {
     collection.find({}).toArray((error, result) => {
