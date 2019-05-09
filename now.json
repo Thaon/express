@@ -7,16 +7,11 @@
 		"use":"@now/node"
 	},
 	{
-		"src": "www/package.json",
+		"src": "package.json",
 		"use": "@now/static-build"
 	}],
 	"routes":
 	[{
-	    "headers": {
-	        "Access-Control-Allow-Origin": "*",
-	        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-	        "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Accept"
-	    },
 	    "src": "/.*",
 	    "dest": "/$1"
 	}]
