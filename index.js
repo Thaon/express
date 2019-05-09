@@ -15,7 +15,7 @@ app.use(BodyParser.urlencoded({ extended: true }));
 
 var database, collection;
 
-function Connect()
+module.exports = Connect = () =>
 {
     MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
         if(error) {
