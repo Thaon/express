@@ -51,7 +51,7 @@ app.post("/note", (request, response) => {
 //get all notes
 app.get("/notes", (request, response) => {
 
-        MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
+    MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
         if(error) {
             cnsole.log("Ouch " + error);
             throw error;
@@ -65,6 +65,7 @@ app.get("/notes", (request, response) => {
                 return response.status(500).send(error);
             }
             response.send(result);
+        });
     });
 });
 
