@@ -17,10 +17,14 @@ var database, collection;
 
 MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
     if(error) {
+        cnsole.log("Ouch " + error);
         throw error;
     }
     database = client.db(DATABASE_NAME);
     collection = database.collection("Notes");
+    console.log("YAY");
+    console.log(database);
+    console.log(collection);
 });
 
 
@@ -28,7 +32,7 @@ MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) =
 
 //api test
 app.get("/hi", (request, response) => {
-        response.send("Hello world!");
+    response.send("Hello world!");
 });
 
 //save a new note
