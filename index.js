@@ -84,7 +84,7 @@ app.get("/notes/:id", (request, response) => {
             var numberID = parseInt(request.params.id);
             
             //only return a response if it is valid
-            if (numberID > result.length)
+            if (numberID >= result.length)
             	response.send("Not enough elements in database")
             else
 	            response.send(result[numberID]);
