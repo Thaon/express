@@ -75,11 +75,19 @@ app.get("/notes/:id", (request, response) => {
         database = client.db(DATABASE_NAME);
         collection = database.collection("Notes");
 
-        collection.findOne({ "_id": new ObjectId(request.params.id) }, (error, result) => {
+        collection.find({}).toArray((error, result) => {
             if(error) {
                 return response.status(500).send(error);
             }
-            response.send(result);
+
+            //parse the request into a number
+            var numberID = parseInt(request.params.id);
+            
+            //only return a response if it is valid
+            if (numberID > result.length)
+            	response.send("Not enough elements in database")
+            else
+	            response.send(result[numberID]);
         });
     });
 });
