@@ -3,24 +3,21 @@ const BodyParser = require("body-parser");
 const MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectID;
 
-const CONNECTION_URL = "mongodb+srv://root:root@lab10-ojovu.mongodb.net/test?retryWrites=true";
-const DATABASE_NAME = "Lab10";
-
-const PORT = process.env.PORT || 3000;
-
 var app = Express();
 
 app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({ extended: true }));
 
-var database, collection;
-
-//we are connected! let's add some routes:
-
 //api test
 app.get("/hi", (request, response) => {
     response.send("Hello world!");
 });
+
+
+var database, collection;
+
+const CONNECTION_URL = "mongodb+srv://root:root@lab10-ojovu.mongodb.net/test?retryWrites=true";
+const DATABASE_NAME = "Lab10";
 
 //save a new note
 app.post("/notes", (request, response) => {
