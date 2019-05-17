@@ -89,5 +89,65 @@ app.get("/notes/:id", (request, response) => {
     });
 });
 
+app.put('/notes/:id', (req, res) => {
+  	MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
+        if(error) {
+            response.send(error);
+            throw error;
+        }
+        database = client.db(DATABASE_NAME);
+        collection = database.collection("Notes");
+
+        collection.find({}).toArray((error, result) => {
+            if(error) {
+                return response.status(500).send(error);
+            }
+
+            //parse the request into a number
+            var numberID = parseInt(request.params.id);
+            
+            //only return a response if it is valid
+            if (numberID >= result.length)
+            	response.send("Not enough elements in database")
+            else
+            {
+            	//grab the note's actual ID and use it to update the note
+            	collection.update({_id:ObjectId(result[numberID])}, {$set: {"body":request.body}})
+	            response.send(result[numberID]);
+            }
+        });
+    });
+});
+
+app.delete('/notes/:id', (req, res) => {
+	MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
+        if(error) {
+            response.send(error);
+            throw error;
+        }
+        database = client.db(DATABASE_NAME);
+        collection = database.collection("Notes");
+
+        collection.find({}).toArray((error, result) => {
+            if(error) {
+                return response.status(500).send(error);
+            }
+
+            //parse the request into a number
+            var numberID = parseInt(request.params.id);
+            
+            //only return a response if it is valid
+            if (numberID >= result.length)
+            	response.send("Not enough elements in database")
+            else
+            {
+            	//grab the note's actual ID and use it to update the note
+            	collection.remove({_id:ObjectId(result[numberID])}, true)
+	            response.send(result[numberID]);
+            }
+        });
+    });
+});
+
 //this last line is required by zeit since we are stateless
 module.exports = app;
