@@ -142,7 +142,7 @@ app.delete('/notes/:id', (req, res) => {
             else
             {
             	//grab the note's actual ID and use it to update the note
-            	collection.deleteOne(id, (err, result) => {
+            	collection.deleteOne({_id:ObjectId(result[numberID])}, (err, result) => {
 					if(err) {
 					throw err;
 					}
