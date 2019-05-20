@@ -100,6 +100,7 @@ app.put('/notes/:id', (req, res) => {
 
         collection.find({}).toArray((error, result) => {
             if(error) {
+                res.send(result[numberID]._id);
                 return response.status(500).send(error);
             }
 
@@ -144,6 +145,7 @@ app.delete('/notes/:id', (req, res) => {
             	//grab the note's actual ID and use it to update the note
             	collection.remove({"_id":result[numberID]._id}, (err, result) => {
 					if(err) {
+                        res.send(result[numberID]);
 					throw err;
 					}
 					res.send('user deleted');
