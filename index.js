@@ -89,7 +89,7 @@ app.get("/notes/:id", (request, response) => {
     });
 });
 
-app.put('/notes/:id', (req, res) => {
+app.put('/notes/:id', (request, response) => {
   	MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
         if(error) {
             response.send(error);
@@ -100,7 +100,7 @@ app.put('/notes/:id', (req, res) => {
 
         collection.find({}).toArray((error, result) => {
             if(error) {
-                res.send(result[numberID]._id);
+                response.send(result[numberID]._id);
                 return response.status(500).send(error);
             }
 
@@ -120,7 +120,7 @@ app.put('/notes/:id', (req, res) => {
     });
 });
 
-app.delete('/notes/:id', (req, res) => {
+app.delete('/notes/:id', (request, response) => {
 	MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
         if(error) {
             response.send(error);
@@ -145,10 +145,10 @@ app.delete('/notes/:id', (req, res) => {
             	//grab the note's actual ID and use it to update the note
             	collection.remove({"_id":result[numberID]._id}, (err, result) => {
 					if(err) {
-                        res.send(result[numberID]);
+                        response.send(result[numberID]);
 					throw err;
 					}
-					res.send('user deleted');
+					response.send('user deleted');
 				});
             }
         });
