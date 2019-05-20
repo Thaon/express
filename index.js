@@ -112,7 +112,7 @@ app.put('/notes/:id', (req, res) => {
             else
             {
             	//grab the note's actual ID and use it to update the note
-            	collection.update({"_id":ObjectId(result[numberID])}, {$set: {"body":request.body.body}})
+            	collection.update({"_id":result[numberID]._id}, {$set: {"body":request.body.body}})
 	            response.send("Updated!");
             }
         });
@@ -142,7 +142,7 @@ app.delete('/notes/:id', (req, res) => {
             else
             {
             	//grab the note's actual ID and use it to update the note
-            	collection.remove({"_id":ObjectId(result[numberID])}, (err, result) => {
+            	collection.remove({"_id":result[numberID]._id}, (err, result) => {
 					if(err) {
 					throw err;
 					}
